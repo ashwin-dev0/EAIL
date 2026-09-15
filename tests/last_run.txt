@@ -1,0 +1,75 @@
+test_api_auth_and_query (test_system.APITests.test_api_auth_and_query) ... /workspace/scratch/19f0ba002674/.venv/lib/python3.12/site-packages/starlette/testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+  _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+ok
+test_api_size_limit (test_system.APITests.test_api_size_limit) ... ok
+test_bmp_ocr (test_system.FormatTests.test_bmp_ocr) ... ok
+test_csv (test_system.FormatTests.test_csv) ... ok
+test_docx (test_system.FormatTests.test_docx) ... ok
+test_html (test_system.FormatTests.test_html) ... ok
+test_jpeg_ocr (test_system.FormatTests.test_jpeg_ocr) ... ok
+test_json (test_system.FormatTests.test_json) ... ok
+test_odp (test_system.FormatTests.test_odp) ... ok
+test_ods (test_system.FormatTests.test_ods) ... ok
+test_odt (test_system.FormatTests.test_odt) ... ok
+test_pdf (test_system.FormatTests.test_pdf) ... ok
+test_png_ocr (test_system.FormatTests.test_png_ocr) ... ok
+test_pptx (test_system.FormatTests.test_pptx) ... ok
+test_scanned_pdf_ocr (test_system.FormatTests.test_scanned_pdf_ocr) ... ok
+test_tiff_ocr (test_system.FormatTests.test_tiff_ocr) ... ok
+test_webp_ocr (test_system.FormatTests.test_webp_ocr) ... ok
+test_xlsx (test_system.FormatTests.test_xlsx) ... ok
+test_xml (test_system.FormatTests.test_xml) ... ok
+test_xml_entities_blocked (test_system.FormatTests.test_xml_entities_blocked) ... ok
+test_acl_revocation_without_watcher (test_system.TestSystem.test_acl_revocation_without_watcher) ... ok
+test_action_list_isolation (test_system.TestSystem.test_action_list_isolation) ... ok
+test_approval_and_duplicate_prevention (test_system.TestSystem.test_approval_and_duplicate_prevention) ... ok
+test_archive_bomb (test_system.TestSystem.test_archive_bomb) ... ok
+test_archive_traversal (test_system.TestSystem.test_archive_traversal) ... ok
+test_busy_request (test_system.TestSystem.test_busy_request) ... ok
+test_classification (test_system.TestSystem.test_classification) ... ok
+test_credentials_file_permissions (test_system.TestSystem.test_credentials_file_permissions) ... ok
+test_delete_deactivates (test_system.TestSystem.test_delete_deactivates) ... ok
+test_department_isolation (test_system.TestSystem.test_department_isolation) ... ok
+test_deterministic_question_no_llm (test_system.TestSystem.test_deterministic_question_no_llm) ... ok
+test_disabled_user (test_system.TestSystem.test_disabled_user) ... ok
+test_duplicate_proposal (test_system.TestSystem.test_duplicate_proposal) ... ok
+test_employee_cannot_approve (test_system.TestSystem.test_employee_cannot_approve) ... ok
+test_exact_sentence_fast_path (test_system.TestSystem.test_exact_sentence_fast_path) ... ok
+test_extract_mode_no_llm (test_system.TestSystem.test_extract_mode_no_llm) ... ok
+test_failed_replacement_keeps_chunks (test_system.TestSystem.test_failed_replacement_keeps_chunks) ... ok
+test_forecast_missing_history_refused (test_system.TestSystem.test_forecast_missing_history_refused) ... ok
+test_forecast_six_months (test_system.TestSystem.test_forecast_six_months) ... ok
+test_import_atomic_validation (test_system.TestSystem.test_import_atomic_validation) ... ok
+test_injected_chunk_excluded (test_system.TestSystem.test_injected_chunk_excluded) ... ok
+test_input_injection (test_system.TestSystem.test_input_injection) ... ok
+test_invalid_token (test_system.TestSystem.test_invalid_token) ... ok
+test_key_payload_mismatch (test_system.TestSystem.test_key_payload_mismatch) ... ok
+test_logs_do_not_contain_raw_content (test_system.TestSystem.test_logs_do_not_contain_raw_content) ... ok
+test_malformed_metadata_denied (test_system.TestSystem.test_malformed_metadata_denied) ... ok
+test_mcp_budget_variance (test_system.TestSystem.test_mcp_budget_variance) ... ok
+test_mcp_denied_department (test_system.TestSystem.test_mcp_denied_department) ... ok
+test_mcp_standard_sdk_interoperability (test_system.TestSystem.test_mcp_standard_sdk_interoperability) ... ok
+test_mcp_unknown_tool (test_system.TestSystem.test_mcp_unknown_tool) ... ok
+test_missing_metadata_denied (test_system.TestSystem.test_missing_metadata_denied) ... ok
+test_missing_period_refused (test_system.TestSystem.test_missing_period_refused) ... ok
+test_mixed_currency_refused (test_system.TestSystem.test_mixed_currency_refused) ... ok
+test_path_traversal (test_system.TestSystem.test_path_traversal) ... ok
+test_private_sso_signature_and_server_roles (test_system.TestSystem.test_private_sso_signature_and_server_roles) ... ok
+test_reasoned_answer_with_ollama_stub (test_system.TestSystem.test_reasoned_answer_with_ollama_stub) ... ok
+test_role_not_from_client (test_system.TestSystem.test_role_not_from_client) ... ok
+test_salary_question_allowed (test_system.TestSystem.test_salary_question_allowed) ... ok
+test_scenario (test_system.TestSystem.test_scenario) ... ok
+test_self_approval_denied (test_system.TestSystem.test_self_approval_denied) ... ok
+test_signature_rejection (test_system.TestSystem.test_signature_rejection) ... ok
+test_source_change_not_stale_answer (test_system.TestSystem.test_source_change_not_stale_answer) ... ok
+test_structured_revocation (test_system.TestSystem.test_structured_revocation) ... ok
+test_successful_replacement (test_system.TestSystem.test_successful_replacement) ... ok
+test_symlink_rejection (test_system.TestSystem.test_symlink_rejection) ... ok
+test_unchanged_ingestion_no_new_version (test_system.TestSystem.test_unchanged_ingestion_no_new_version) ... ok
+test_user_specific_acl (test_system.TestSystem.test_user_specific_acl) ... ok
+test_word_overlap_not_grounding (test_system.TestSystem.test_word_overlap_not_grounding) ... ok
+
+----------------------------------------------------------------------
+Ran 68 tests in 6.936s
+
+OK

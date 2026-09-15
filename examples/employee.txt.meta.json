@@ -1,0 +1,7 @@
+{
+  "department": "HR",
+  "classification": 1,
+  "owner": "demo-admin",
+  "allowed_users": [],
+  "allowed_roles": []
+}

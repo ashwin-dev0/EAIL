@@ -1,0 +1,171 @@
+[
+  {
+    "id": "demo-Finance-0",
+    "department": "Finance",
+    "kind": "budget_actual",
+    "period": "2026-08",
+    "payload": {
+      "category": "Software",
+      "currency": "INR",
+      "budget_minor": 10000000,
+      "actual_minor": 12000000
+    },
+    "metadata": {
+      "department": "Finance",
+      "classification": 1,
+      "owner": "demo-admin",
+      "allowed_users": [],
+      "allowed_roles": []
+    },
+    "source_updated_at": "2026-09-01T00:00:00+00:00"
+  },
+  {
+    "id": "demo-Finance-1",
+    "department": "Finance",
+    "kind": "budget_actual",
+    "period": "2026-08",
+    "payload": {
+      "category": "Services",
+      "currency": "INR",
+      "budget_minor": 5000000,
+      "actual_minor": 5500000
+    },
+    "metadata": {
+      "department": "Finance",
+      "classification": 1,
+      "owner": "demo-admin",
+      "allowed_users": [],
+      "allowed_roles": []
+    },
+    "source_updated_at": "2026-09-01T00:00:00+00:00"
+  },
+  {
+    "id": "demo-Procurement-0",
+    "department": "Procurement",
+    "kind": "budget_actual",
+    "period": "2026-08",
+    "payload": {
+      "category": "Software",
+      "currency": "INR",
+      "budget_minor": 10000000,
+      "actual_minor": 12000000
+    },
+    "metadata": {
+      "department": "Procurement",
+      "classification": 1,
+      "owner": "demo-admin",
+      "allowed_users": [],
+      "allowed_roles": []
+    },
+    "source_updated_at": "2026-09-01T00:00:00+00:00"
+  },
+  {
+    "id": "demo-Procurement-1",
+    "department": "Procurement",
+    "kind": "budget_actual",
+    "period": "2026-08",
+    "payload": {
+      "category": "Services",
+      "currency": "INR",
+      "budget_minor": 5000000,
+      "actual_minor": 5500000
+    },
+    "metadata": {
+      "department": "Procurement",
+      "classification": 1,
+      "owner": "demo-admin",
+      "allowed_users": [],
+      "allowed_roles": []
+    },
+    "source_updated_at": "2026-09-01T00:00:00+00:00"
+  },
+  {
+    "id": "demo-IT",
+    "department": "IT",
+    "kind": "department_metrics",
+    "period": "2026-08",
+    "payload": {
+      "open_incidents": 8,
+      "critical_incidents": 2
+    },
+    "metadata": {
+      "department": "IT",
+      "classification": 1,
+      "owner": "demo-admin",
+      "allowed_users": [],
+      "allowed_roles": []
+    },
+    "source_updated_at": "2026-09-01T00:00:00+00:00"
+  },
+  {
+    "id": "demo-Administration",
+    "department": "Administration",
+    "kind": "department_metrics",
+    "period": "2026-08",
+    "payload": {
+      "maintenance_requests": 12
+    },
+    "metadata": {
+      "department": "Administration",
+      "classification": 1,
+      "owner": "demo-admin",
+      "allowed_users": [],
+      "allowed_roles": []
+    },
+    "source_updated_at": "2026-09-01T00:00:00+00:00"
+  },
+  {
+    "id": "demo-Innovation",
+    "department": "Innovation",
+    "kind": "department_metrics",
+    "period": "2026-08",
+    "payload": {
+      "active_projects": 4,
+      "delayed_milestones": 1
+    },
+    "metadata": {
+      "department": "Innovation",
+      "classification": 1,
+      "owner": "demo-admin",
+      "allowed_users": [],
+      "allowed_roles": []
+    },
+    "source_updated_at": "2026-09-01T00:00:00+00:00"
+  },
+  {
+    "id": "demo-HR",
+    "department": "HR",
+    "kind": "department_metrics",
+    "period": "2026-08",
+    "payload": {
+      "headcount": 25,
+      "training_completion_percent": 80
+    },
+    "metadata": {
+      "department": "HR",
+      "classification": 1,
+      "owner": "demo-admin",
+      "allowed_users": [],
+      "allowed_roles": []
+    },
+    "source_updated_at": "2026-09-01T00:00:00+00:00"
+  },
+  {
+    "id": "demo-Compliance",
+    "department": "Compliance",
+    "kind": "department_metrics",
+    "period": "2026-08",
+    "payload": {
+      "open_findings": 3,
+      "overdue_obligations": 1
+    },
+    "metadata": {
+      "department": "Compliance",
+      "classification": 1,
+      "owner": "demo-admin",
+      "allowed_users": [],
+      "allowed_roles": []
+    },
+    "source_updated_at": "2026-09-01T00:00:00+00:00"
+  }
+]
