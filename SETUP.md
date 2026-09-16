@@ -236,3 +236,8 @@ bash scripts/create_lock.sh
 Tests use temporary data, explicit demo vectors, synthetic records, and a loopback model stub. They do not modify your configured enterprise DB. Freeze dependencies only after the target OS/Python/CPU environment passes actual MiniLM, Ollama and ShaktiDB integration checks.
 
 Backups contain sensitive data. Restrict access, encrypt transfers, keep a copy on separate approved storage, and test restoration. The included DB backup command does not automatically back up documents, role configuration, models, or secrets; back up those under enterprise policy as well.
+
+
+## Connector release 0.2.0
+
+See `CONNECTORS.md` for the additive schema migration, read-only source configuration, encrypted OAuth cache, approved fields, snapshot freshness and vendor limitations. Existing RAG ingestion, OCR, retrieval, local models, independent judge, MCP analytics and task approvals remain available. Source systems retain their records; these adapters perform reads only.

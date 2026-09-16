@@ -1,10 +1,10 @@
-# Verification report — EAIL 0.1.0
+# Verification report — EAIL 0.2.0
 
 Verified on 15 September 2026 with Python 3.12 in a Linux test environment.
 
 ## Executed checks
 
-- **68 tests passed, zero failures and zero skips.**
+- **110 tests passed, zero failures and zero skips (7.15 seconds).** One upstream Starlette/AnyIO deprecation warning was reported.
 - Full Python syntax compilation passed.
 - Multi-format ingestion: JSON, CSV, XML, HTML, DOCX, PPTX, XLSX, PDF text, scanned PDF OCR, PNG/JPEG/TIFF/BMP/WEBP OCR, ODT, ODS, ODP, and plain-text document flows.
 - File safety: traversal, symlinks, signature mismatch, archive traversal/expansion and XML external-entity rejection.
@@ -17,6 +17,16 @@ Verified on 15 September 2026 with Python 3.12 in a Linux test environment.
 - API: missing-token rejection, authenticated query, body-size bound and no-store responses.
 - Grounded generation: loopback Ollama API stub exercised generator, independent judge, citations and acceptance path.
 - Metadata-only application logs checked for raw-content/token leakage.
+
+## Connector checks
+
+- Actual read-only external SQLite SELECT and SQL AST rejection of writes, multiple statements, wildcard projection and locks.
+- Mocked Zoho OAuth, regional hosts, token renewal, encrypted cross-adapter token reuse, Books pagination, CRM continuation and Analytics selected-column controls.
+- Tally XML export fixtures, company escaping, date filters, entity rejection and unsafe remote transport refusal.
+- Atomic publication, stable IDs, incomplete snapshots, parent field/byte bounds, freshness, changed credentials/policy and record-specific ACL denial.
+- Authorized Decimal aggregates, mixed-currency grouping, explicit variance, MCP/API access and model-unavailable fallback.
+
+No live Zoho account, Tally installation, MySQL/MariaDB, SQL Server, Oracle or MongoDB server was available. Their interfaces/configuration require live integration tests.
 
 ## Test boundaries
 

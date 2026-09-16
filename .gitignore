@@ -1,0 +1,13 @@
+.env
+venv/
+.venv/
+__pycache__/
+*.pyc
+config/users.json
+data/
+logs/
+backups/
+models/
+documents/*
+!documents/.gitkeep
+requirements.lock.txt

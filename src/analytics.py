@@ -14,6 +14,10 @@ def fact_fingerprint(row):
 
 def structured_still_valid(results,principal):
     for result in results:
+        if result.get('tool')=='source_records':
+            from src.connectors.query import snapshot_still_valid
+            if not snapshot_still_valid(result,principal): return False
+            continue
         for source in result.get('sources',[]):
             rows=db.rows('SELECT * FROM eail_facts WHERE id=?',(source['id'],))
             if not rows or not principal.can_read(json.loads(rows[0]['metadata'])) or fact_fingerprint(rows[0])!=source['fingerprint']:
@@ -106,7 +110,13 @@ def forecast_spend(principal,department,period):
         'sources':[{'id':row['id'],'updated_at':row['updated_at'],'source_updated_at':row.get('source_updated_at',''),'fingerprint':fact_fingerprint(row)} for row in all_rows],
         'excluded_records':excluded,'scope':'complete authorized monthly history'}
 
+def read_source(principal,dataset_id,period,limit):
+    from src.connectors.query import source_records
+    return source_records(principal,dataset_id,period,limit)
+
 TOOLS={
+ 'source_records':{'function':read_source,'description':'Read authorized synchronized Zoho, Tally or database records by approved dataset ID; return deterministic measures and source provenance.',
+ 'parameters':{'type':'object','properties':{'dataset_id':{'type':'string'},'period':{'type':'string'},'limit':{'type':'integer','minimum':1,'maximum':100}},'required':['dataset_id','period','limit'],'additionalProperties':False}},
  'forecast_spend':{'function':forecast_spend,'description':'Baseline next-period spending projection; requires six complete consecutive monthly periods.',
  'parameters':{'type':'object','properties':{'department':{'type':'string','enum':list(DEPARTMENTS)},'period':{'type':'string'}},'required':['department','period'],'additionalProperties':False}},
  'budget_variance':{'function':budget_variance,'description':'Calculate actual minus budget for one department and explicit period.',
@@ -120,5 +130,15 @@ def dispatch(name,args,principal):
     if name not in TOOLS: raise ValueError('Tool is not allowlisted')
     schema=TOOLS[name]['parameters']
     if set(args)!=set(schema['required']): raise ValueError('Tool arguments do not match schema')
-    principal.require_department(args['department']);validate_period(args['period'])
+    authorize_tool(name,args,principal)
     return TOOLS[name]['function'](principal,**args)
+
+def authorize_tool(name,args,principal):
+    if name not in TOOLS or set(args)!=set(TOOLS[name]['parameters']['required']): raise ValueError('Invalid tool call')
+    if name=='source_records':
+        from src.connectors.registry import resolve
+        resolve(args['dataset_id'],principal)
+        if args['period']: validate_period(args['period'])
+        if type(args['limit']) is not int or not 1<=args['limit']<=100: raise ValueError('Invalid source limit')
+    else:
+        principal.require_department(args['department']);validate_period(args['period'])

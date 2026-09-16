@@ -2,7 +2,7 @@
 
 A complete runnable backend reference implementation extending the hardened multi-format RAG project with enterprise access policies, departmental MCP tools, structured analytics, local inference, decision support, and approved follow-up tasks.
 
-**Release: 0.1.0.** This package provides implemented features, executable tests, and deployment examples. It is not a claim that a production enterprise installation, existing EC2 integration, or security certification has already been completed.
+**Release: 0.2.0.** This package provides implemented features, executable tests, and deployment examples. It is not a claim that a production enterprise installation, existing EC2 integration, or security certification has already been completed.
 
 The existing CLI is retained. FastAPI provides an authenticated API and interactive API documentation at `http://127.0.0.1:8000/docs`. There is no separate React portal in this backend release. Existing applications remain systems of record.
 
@@ -13,7 +13,8 @@ Read these files in order:
 3. `MIGRATION.md` — preserve your existing `~/pdf-rag` and ShaktiDB records.
 4. `SECURITY.md` — implemented security boundaries and rollout requirements.
 5. `FEATURES.md` — feature preservation, implementation status, and limits.
-6. `TEST_REPORT.md` — checks actually performed.
+6. `CONNECTORS.md` — Zoho, Tally and database configuration.
+7. `TEST_REPORT.md` — checks actually performed.
 
 ## Included code
 
@@ -36,6 +37,7 @@ Read these files in order:
 | `src/analytics.py` | Budget variance, department summaries, scenarios, baseline forecasts |
 | `src/mcp_server.py`, `src/mcp_gateway.py` | Genuine MCP JSON-RPC over local stdio |
 | `src/workflows.py` | Approval and idempotent local task execution |
+| `src/connectors/` | Read-only adapters, OAuth cache, isolated sync, ACL-filtered snapshots |
 | `src/api.py` | Authenticated API, request limits, safe errors |
 | `src/ask.py` | Interactive terminal interface |
 | `src/health.py` | DB, model, OCR and dependency health |

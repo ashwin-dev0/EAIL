@@ -43,6 +43,6 @@ class DB:
                 if statement.strip(): self.execute(conn,statement)
     def verify(self):
         with self.connect() as conn:
-            for table in ['eail_documents','eail_chunks','eail_ingestion','eail_facts','eail_actions','eail_tasks']:
+            for table in ['eail_documents','eail_chunks','eail_ingestion','eail_facts','eail_actions','eail_tasks','eail_sync_state','eail_sync_runs','eail_source_records']:
                 self.execute(conn, f'SELECT 1 FROM {table} LIMIT 1')
 db = DB()

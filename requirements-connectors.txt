@@ -1,0 +1,7 @@
+-r requirements.txt
+# Optional source drivers; install only those needed on the target machine.
+PyMySQL>=1.1,<2
+pymongo>=4.10,<5
+# SQL Server needs Microsoft ODBC Driver 18 installed outside Python.
+pyodbc>=5,<6
+oracledb>=2,<5

@@ -11,3 +11,5 @@ GRANT SELECT,INSERT,UPDATE,DELETE ON eail_documents,eail_chunks,eail_ingestion,e
 -- In interactive psql: \password eail_runtime
 -- Schema ownership remains with the administrative owner.
 -- Application ACLs are enforced by EAIL; this script does not claim database RLS.
+
+GRANT SELECT,INSERT,UPDATE,DELETE ON eail_sync_state,eail_sync_runs,eail_source_records TO eail_runtime;

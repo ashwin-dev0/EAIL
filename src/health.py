@@ -15,6 +15,10 @@ def check():
         ['psycopg','sentence_transformers','pypdf','pypdfium2','docx','pptx','openpyxl','PIL','pytesseract','odf','defusedxml','bs4','fastapi']}
     import shutil
     result['tesseract_available']=shutil.which('tesseract') is not None
+    from src.connectors.registry import load_catalog
+    try:
+        catalog=load_catalog();result['registered_sources']=sum(1 for s in catalog['sources'] if s['enabled'])
+    except Exception as exc: result['connector_catalog']=type(exc).__name__
     result['documents_directory']=settings.documents.is_dir()
     return result
 if __name__=='__main__': print(json.dumps(check(),indent=2))

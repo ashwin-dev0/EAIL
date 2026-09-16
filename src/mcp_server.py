@@ -20,7 +20,7 @@ def run():
                 requested=req.get('params',{}).get('protocolVersion')
                 protocol=requested if requested in PROTOCOLS else '2025-06-18'
                 result={'protocolVersion':protocol,'capabilities':{'tools':{'listChanged':False}},
-                        'serverInfo':{'name':'eail-departments','version':'0.1.0'}}
+                        'serverInfo':{'name':'eail-departments','version':'0.2.0'}}
                 initialized=True
             elif method=='notifications/initialized':
                 if not initialized: raise ValueError('Initialization required')
