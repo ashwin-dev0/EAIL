@@ -18,7 +18,7 @@
 | Private enterprise SSO | Offline RS256 bearer verification implemented; enterprise IdP/login flow external |
 | Genuine MCP backend | Internal stdio server/gateway implemented and SDK interoperability tested |
 | All seven departments | Synthetic fixtures and scoped generic read tools provided |
-| Enterprise source connector | Read-only PostgreSQL-compatible export/normalized import pattern provided; real schemas/API adapters must be supplied |
+| Enterprise source connector | Zoho Books/CRM/Analytics, approved Zoho REST mappings, Tally XML, SQLAlchemy SQL and MongoDB adapters; configure credentials, fields and source policies before use |
 | Conversational structured analytics | Budget, summaries, explicit-period cross-department queries implemented |
 | Decision support | Hypothetical spending scenarios and transparent forecast baseline implemented |
 | Agentic behavior | Bounded read-only routing/tool execution; one synthesis flow |

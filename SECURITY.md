@@ -15,3 +15,8 @@ API-local rate limits are process-local and key off socket peer IP. Reverse-prox
 Audit files rotate and are not cryptographically immutable. Use approved protected centralized collection, retention, time synchronization, and monitoring when audit-grade history is required. Do not enable raw-content access logging in upstream systems unintentionally.
 
 No feature is advertised as unhackable. Live production readiness requires target-environment integration, cross-user authorization testing, business reconciliation, measured load limits, restore tests, and enterprise security review.
+
+
+## Connector release 0.2.0
+
+See `CONNECTORS.md` for the additive schema migration, read-only source configuration, encrypted OAuth cache, approved fields, snapshot freshness and vendor limitations. Existing RAG ingestion, OCR, retrieval, local models, independent judge, MCP analytics and task approvals remain available. Source systems retain their records; these adapters perform reads only.

@@ -1,14 +1,14 @@
 import json, os, subprocess, sys, time
 from src.config import ROOT
 from src.auth import authenticate
-from src.analytics import TOOLS, validate_period
+from src.analytics import TOOLS, validate_period,authorize_tool
 from src.logging_setup import event
 
 class MCPGateway:
     def call(self,name,args,token,request_id,timeout=20):
         principal=authenticate(token)
         if name not in TOOLS or set(args)!=set(TOOLS[name]['parameters']['required']): raise ValueError('Invalid tool call')
-        principal.require_department(args['department']);validate_period(args['period'])
+        authorize_tool(name,args,principal)
         env=os.environ.copy();env['EAIL_MCP_TOKEN']=token
         # Command is fixed developer code; model/user cannot select a process or module.
         messages=[{'jsonrpc':'2.0','id':1,'method':'initialize','params':{
@@ -27,5 +27,5 @@ class MCPGateway:
         if 'error' in reply or data.get('isError',True): raise RuntimeError('Department tool failed')
         value=json.loads(data['content'][0]['text'])
         event('audit','mcp_call',request_id=request_id,user_id=principal.id,tool=name,
-              department=args['department'],seconds=round(time.monotonic()-begin,3))
+              department=args.get('department'),dataset_id=args.get('dataset_id'),seconds=round(time.monotonic()-begin,3))
         return value

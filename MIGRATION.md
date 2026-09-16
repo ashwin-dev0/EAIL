@@ -14,3 +14,8 @@ This is a new project folder and a new schema namespace. It does not replace the
 10. Switch consumers only after target-host acceptance tests and operational recovery checks pass.
 
 The normal CLI remains `python -m src.ask`; ingestion remains `python -m src.ingest`; status remains `python -m src.ingestion_status`. Configuration defaults and log channels are preserved, but EAIL deliberately adds authentication and requires document access metadata.
+
+
+## Connector release 0.2.0
+
+See `CONNECTORS.md` for the additive schema migration, read-only source configuration, encrypted OAuth cache, approved fields, snapshot freshness and vendor limitations. Existing RAG ingestion, OCR, retrieval, local models, independent judge, MCP analytics and task approvals remain available. Source systems retain their records; these adapters perform reads only.

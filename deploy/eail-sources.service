@@ -1,0 +1,23 @@
+[Unit]
+Description=EAIL read-only source synchronization worker
+After=network.target
+[Service]
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/eail
+ExecStart=/home/ubuntu/eail/venv/bin/python -m src.connectors.watcher
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/ubuntu/eail/data /home/ubuntu/eail/logs
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+[Install]
+WantedBy=multi-user.target

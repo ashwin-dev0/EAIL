@@ -59,7 +59,10 @@ def analytics_text(results):
     for result in results:
         if result['status']!='ok':
             parts.append(f"{result['department']}: no authorized data for {result['period']}.");continue
-        if result['tool']=='budget_variance':
+        if result['tool']=='source_records':
+            detail='; '.join(f"{m['name']}: {m['by_currency']} {m['unit']}" for m in result['measures'])
+            parts.append(f"{result['dataset_id']}: {result['matching_records']} authorized records. {detail} Snapshot synchronized {result['synced_at']}.")
+        elif result['tool']=='budget_variance':
             parts.append(f"{result['department']} {result['period']}: budget {result['currency']} {format_minor(result['budget_minor'])}; actual {result['currency']} {format_minor(result['actual_minor'])}; variance {result['currency']} {format_minor(result['variance_minor'])} ({result['variance_percent'] if result['variance_percent'] is not None else 'undefined'}%).")
         elif result['tool']=='forecast_spend':
             parts.append(f"{result['department']} {result['period']}: baseline projected spending {result['currency']} {format_minor(result['predicted_actual_minor'])}; rolling backtest mean absolute error {format_minor(result['backtest_mae_minor'])}. {result['assumption']}")
@@ -80,7 +83,7 @@ def bounded_context(sources,structured):
         evidence.append(item);used+=size
     return evidence
 
-def ask(question,token,mode='reasoned'):
+def ask(question,token,mode='reasoned',dataset_id=None):
     if mode not in {'reasoned','extractive'}: raise ValueError('Mode must be reasoned or extractive')
     principal=authenticate(token);question=validate_question(question)
     if not slot.acquire(blocking=False): raise RuntimeError('EAIL is busy; retry shortly')
@@ -92,11 +95,20 @@ def ask(question,token,mode='reasoned'):
         return min(value,settings.ollama_timeout)
     try:
         event('audit','query_started',request_id=request_id,user_id=principal.id,mode=mode)
-        if mode=='extractive': route={'tool':'none','departments':[],'period':'','use_documents':True}
+        if dataset_id:
+            from src.connectors.registry import resolve
+            resolve(dataset_id,principal)
+            found_period=re.search(r'\b(\d{4}-(?:Q[1-4]|0[1-9]|1[0-2]))\b',question,re.I)
+            route={'tool':'source_records','dataset_id':dataset_id,'departments':[],'period':found_period.group(1).upper() if found_period else '',
+              'use_documents':bool(re.search(r'why|explain|policy|contract',question,re.I)),'source_synthesis':True}
+        elif mode=='extractive': route={'tool':'none','departments':[],'period':'','use_documents':True}
         else: route=plan(question,principal,request_id,remaining)
         timings['planning']=round(time.monotonic()-begin,3)
         event('audit','plan',request_id=request_id,tool=route['tool'],departments=route['departments'],period=route['period'])
         structured=[];start=time.monotonic()
+        if route['tool']=='source_records':
+            result=MCPGateway().call('source_records',{'dataset_id':route['dataset_id'],'period':route['period'],'limit':50},token,request_id,min(20,remaining()))
+            structured.append(result);warnings.extend(result.get('warnings',[]))
         for department in route['departments'] if route['tool']!='none' else []:
             try:
                 structured.append(MCPGateway().call(route['tool'],{'department':department,'period':route['period']},token,request_id,min(20,remaining())))
@@ -120,7 +132,7 @@ def ask(question,token,mode='reasoned'):
             # Explicit user-selected excerpt mode; no claim that this solves the question.
             answer='Retrieved evidence excerpt:\n'+sources[0]['content']
             citation_ids=[sources[0]['id']];evaluation={'method':'extractive_copy','judge_skipped':True}
-        elif structured and not route['use_documents']:
+        elif structured and not route['use_documents'] and not route.get('source_synthesis'):
             answer=analytics_text(structured);citation_ids=[f'analytics-{i}' for i in range(len(structured))]
             evaluation={'method':'deterministic_analytics','judge_skipped':True}
         elif evidence:

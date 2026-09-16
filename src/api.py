@@ -17,7 +17,7 @@ async def lifespan(app):
     from src.auth import load_users
     load_users()
     yield
-app=FastAPI(title='Enterprise Agentic Intelligence Layer',version='0.1.0',lifespan=lifespan)
+app=FastAPI(title='Enterprise Agentic Intelligence Layer',version='0.2.0',lifespan=lifespan)
 
 lock=threading.Lock();buckets={}
 @app.middleware('http')
@@ -60,6 +60,7 @@ class StrictModel(BaseModel): model_config=ConfigDict(extra='forbid')
 class Query(StrictModel):
     question:str=Field(min_length=3,max_length=2000)
     mode:str='reasoned'
+    dataset_id:str|None=Field(default=None,max_length=80)
 class Proposal(StrictModel):
     department:str
     title:str=Field(min_length=3,max_length=300)
@@ -89,7 +90,7 @@ def me(identity=Depends(credentials)):
     user,_=identity
     return {'id':user.id,'role':user.role,'departments':user.departments,'clearance':user.clearance}
 @app.post('/ask')
-def question(body:Query,identity=Depends(credentials)): return ask(body.question,identity[1],body.mode)
+def question(body:Query,identity=Depends(credentials)): return ask(body.question,identity[1],body.mode,body.dataset_id)
 @app.get('/ingestion/status')
 def ingestion_status(identity=Depends(credentials)):
     if not identity[0].ingest: raise PermissionError()
@@ -108,3 +109,13 @@ def scenario(body:Scenario,identity=Depends(credentials)):
     from src.mcp_gateway import MCPGateway
     import uuid
     return MCPGateway().call('budget_scenario',body.model_dump(),identity[1],str(uuid.uuid4()))
+
+@app.get('/sources')
+def sources(identity=Depends(credentials)):
+    from src.connectors.query import list_datasets
+    return list_datasets(identity[0])
+@app.get('/sources/{dataset_id}/records')
+def records(dataset_id:str,period:str='',limit:int=50,identity=Depends(credentials)):
+    from src.mcp_gateway import MCPGateway
+    import uuid
+    return MCPGateway().call('source_records',{'dataset_id':dataset_id,'period':period,'limit':limit},identity[1],str(uuid.uuid4()))

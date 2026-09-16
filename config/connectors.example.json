@@ -1,0 +1,374 @@
+{
+  "sources": [
+    {
+      "id": "zoho-books",
+      "kind": "zoho_books",
+      "enabled": false,
+      "region": "in",
+      "organization_id": "REPLACE_WITH_ORG_ID",
+      "client_id_env": "ZOHO_CLIENT_ID",
+      "client_secret_env": "ZOHO_CLIENT_SECRET",
+      "refresh_token_env": "ZOHO_BOOKS_REFRESH_TOKEN",
+      "token_cache_key_env": "ZOHO_TOKEN_CACHE_KEY"
+    },
+    {
+      "id": "zoho-crm",
+      "kind": "zoho_crm",
+      "enabled": false,
+      "region": "in",
+      "organization_id": "REPLACE_WITH_ORG_ID",
+      "client_id_env": "ZOHO_CLIENT_ID",
+      "client_secret_env": "ZOHO_CLIENT_SECRET",
+      "refresh_token_env": "ZOHO_CRM_REFRESH_TOKEN",
+      "token_cache_key_env": "ZOHO_TOKEN_CACHE_KEY"
+    },
+    {
+      "id": "zoho-analytics",
+      "kind": "zoho_analytics",
+      "enabled": false,
+      "region": "in",
+      "organization_id": "REPLACE_WITH_ORG_ID",
+      "client_id_env": "ZOHO_CLIENT_ID",
+      "client_secret_env": "ZOHO_CLIENT_SECRET",
+      "refresh_token_env": "ZOHO_ANALYTICS_REFRESH_TOKEN",
+      "token_cache_key_env": "ZOHO_TOKEN_CACHE_KEY"
+    },
+    {
+      "id": "tally-prime",
+      "kind": "tally",
+      "enabled": false,
+      "url_env": "TALLY_URL",
+      "company_env": "TALLY_COMPANY",
+      "approved_hosts": [
+        "127.0.0.1",
+        "localhost"
+      ]
+    },
+    {
+      "id": "enterprise-db",
+      "kind": "sql",
+      "enabled": false,
+      "url_env": "SOURCE_DATABASE_URL",
+      "approved_hosts": [
+        "db.internal"
+      ],
+      "readonly_credentials_confirmed": true
+    }
+  ],
+  "datasets": [
+    {
+      "id": "zoho-invoices",
+      "source_id": "zoho-books",
+      "enabled": false,
+      "metadata": {
+        "department": "Finance",
+        "classification": 2,
+        "owner": "demo-admin",
+        "allowed_users": [],
+        "allowed_roles": [
+          "CFO",
+          "FinanceManager"
+        ]
+      },
+      "max_rows": 10000,
+      "max_bytes": 5000000,
+      "max_age_seconds": 3600,
+      "allow_empty": false,
+      "sync_scope": "all",
+      "resource": "invoices",
+      "fields": [
+        "invoice_id",
+        "invoice_number",
+        "date",
+        "status",
+        "customer_name",
+        "currency_code",
+        "total",
+        "balance",
+        "last_modified_time"
+      ],
+      "id_field": "invoice_id",
+      "period_field": "date",
+      "updated_field": "last_modified_time",
+      "measures": [
+        {
+          "name": "invoice_total",
+          "field": "total",
+          "operation": "sum_decimal",
+          "currency_field": "currency_code",
+          "unit": "major_currency_units"
+        },
+        {
+          "name": "outstanding_balance",
+          "field": "balance",
+          "operation": "sum_decimal",
+          "currency_field": "currency_code",
+          "unit": "major_currency_units"
+        }
+      ]
+    },
+    {
+      "id": "zoho-contacts",
+      "source_id": "zoho-books",
+      "enabled": false,
+      "metadata": {
+        "department": "Finance",
+        "classification": 2,
+        "owner": "demo-admin",
+        "allowed_users": [],
+        "allowed_roles": [
+          "CFO",
+          "FinanceManager"
+        ]
+      },
+      "max_rows": 10000,
+      "max_bytes": 5000000,
+      "max_age_seconds": 3600,
+      "allow_empty": false,
+      "sync_scope": "all",
+      "resource": "contacts",
+      "fields": [
+        "contact_id",
+        "contact_name",
+        "contact_type",
+        "last_modified_time"
+      ],
+      "id_field": "contact_id",
+      "updated_field": "last_modified_time"
+    },
+    {
+      "id": "zoho-deals",
+      "source_id": "zoho-crm",
+      "enabled": false,
+      "metadata": {
+        "department": "Finance",
+        "classification": 2,
+        "owner": "demo-admin",
+        "allowed_users": [],
+        "allowed_roles": [
+          "CFO",
+          "FinanceManager"
+        ]
+      },
+      "max_rows": 10000,
+      "max_bytes": 5000000,
+      "max_age_seconds": 3600,
+      "allow_empty": false,
+      "sync_scope": "all",
+      "resource": "Deals",
+      "fields": [
+        "id",
+        "Deal_Name",
+        "Stage",
+        "Amount",
+        "Currency",
+        "Closing_Date",
+        "Modified_Time"
+      ],
+      "id_field": "id",
+      "period_field": "Closing_Date",
+      "updated_field": "Modified_Time",
+      "measures": [
+        {
+          "name": "deal_amount",
+          "field": "Amount",
+          "operation": "sum_decimal",
+          "currency_field": "Currency",
+          "unit": "major_currency_units"
+        }
+      ]
+    },
+    {
+      "id": "zoho-analytics-table",
+      "source_id": "zoho-analytics",
+      "enabled": false,
+      "metadata": {
+        "department": "Finance",
+        "classification": 2,
+        "owner": "demo-admin",
+        "allowed_users": [],
+        "allowed_roles": [
+          "CFO",
+          "FinanceManager"
+        ]
+      },
+      "max_rows": 10000,
+      "max_bytes": 5000000,
+      "max_age_seconds": 3600,
+      "allow_empty": false,
+      "sync_scope": "all",
+      "workspace_id": "REPLACE_WITH_WORKSPACE_ID",
+      "view_id": "REPLACE_WITH_VIEW_ID",
+      "fields": [
+        "id",
+        "date",
+        "currency",
+        "amount"
+      ],
+      "id_field": "id",
+      "period_field": "date",
+      "measures": [
+        {
+          "name": "amount_total",
+          "field": "amount",
+          "operation": "sum_decimal",
+          "currency_field": "currency",
+          "unit": "administrator_defined"
+        }
+      ]
+    },
+    {
+      "id": "tally-ledgers",
+      "source_id": "tally-prime",
+      "enabled": false,
+      "metadata": {
+        "department": "Finance",
+        "classification": 2,
+        "owner": "demo-admin",
+        "allowed_users": [],
+        "allowed_roles": [
+          "CFO",
+          "FinanceManager"
+        ]
+      },
+      "max_rows": 10000,
+      "max_bytes": 5000000,
+      "max_age_seconds": 3600,
+      "allow_empty": false,
+      "sync_scope": "all",
+      "resource": "ledgers",
+      "fields": [
+        "guid",
+        "name",
+        "parent",
+        "opening_balance",
+        "closing_balance"
+      ],
+      "id_field": "guid"
+    },
+    {
+      "id": "tally-vouchers",
+      "source_id": "tally-prime",
+      "enabled": false,
+      "metadata": {
+        "department": "Finance",
+        "classification": 2,
+        "owner": "demo-admin",
+        "allowed_users": [],
+        "allowed_roles": [
+          "CFO",
+          "FinanceManager"
+        ]
+      },
+      "max_rows": 10000,
+      "max_bytes": 5000000,
+      "max_age_seconds": 3600,
+      "allow_empty": false,
+      "sync_scope": "period",
+      "resource": "vouchers",
+      "fields": [
+        "guid",
+        "date",
+        "voucher_number",
+        "voucher_type",
+        "party_ledger",
+        "amount",
+        "is_cancelled",
+        "ledger_entries"
+      ],
+      "id_field": "guid",
+      "period_field": "date",
+      "sync_periods": [
+        "2026-09"
+      ]
+    },
+    {
+      "id": "tally-stock-items",
+      "source_id": "tally-prime",
+      "enabled": false,
+      "metadata": {
+        "department": "Finance",
+        "classification": 2,
+        "owner": "demo-admin",
+        "allowed_users": [],
+        "allowed_roles": [
+          "CFO",
+          "FinanceManager"
+        ]
+      },
+      "max_rows": 10000,
+      "max_bytes": 5000000,
+      "max_age_seconds": 3600,
+      "allow_empty": false,
+      "sync_scope": "all",
+      "resource": "stock_items",
+      "fields": [
+        "guid",
+        "name",
+        "parent",
+        "base_units",
+        "closing_balance",
+        "closing_value"
+      ],
+      "id_field": "guid"
+    },
+    {
+      "id": "enterprise-budget",
+      "source_id": "enterprise-db",
+      "enabled": false,
+      "metadata": {
+        "department": "Finance",
+        "classification": 2,
+        "owner": "demo-admin",
+        "allowed_users": [],
+        "allowed_roles": [
+          "CFO",
+          "FinanceManager"
+        ]
+      },
+      "max_rows": 10000,
+      "max_bytes": 5000000,
+      "max_age_seconds": 3600,
+      "allow_empty": false,
+      "sync_scope": "period",
+      "query_file": "config/sql/budget.sql",
+      "fields": [
+        "id",
+        "period",
+        "category",
+        "currency",
+        "budget_minor",
+        "actual_minor"
+      ],
+      "id_field": "id",
+      "period_field": "period",
+      "sync_periods": [
+        "2026-09"
+      ],
+      "measures": [
+        {
+          "name": "budget",
+          "field": "budget_minor",
+          "operation": "sum_decimal",
+          "currency_field": "currency",
+          "unit": "minor_currency_units"
+        },
+        {
+          "name": "actual_spending",
+          "field": "actual_minor",
+          "operation": "sum_decimal",
+          "currency_field": "currency",
+          "unit": "minor_currency_units"
+        },
+        {
+          "name": "budget_variance",
+          "field": "actual_minor",
+          "baseline_field": "budget_minor",
+          "operation": "difference_decimal",
+          "currency_field": "currency",
+          "unit": "minor_currency_units"
+        }
+      ]
+    }
+  ]
+}

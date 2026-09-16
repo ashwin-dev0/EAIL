@@ -57,7 +57,7 @@ Clear analytics questions with explicit periods use a fast deterministic route, 
 
 The gateway starts a fixed internal `src.mcp_server` process and negotiates MCP initialization. Messages are actual JSON-RPC `initialize`, `notifications/initialized`, `tools/list` and `tools/call` messages over newline-delimited stdio. The trusted gateway supplies an opaque credential through the subprocess environment; the model never receives it. The MCP server authenticates it again and independently checks each call.
 
-This internal MCP server reads EAIL's normalized departmental facts. It does not pretend to be connected to your existing ERP/HR/procurement installation. For those systems, the included read-only export adapter provides one concrete integration pattern. Normalize approved source data, import it transactionally, and retain source IDs/timestamps. Replace the adapter with private authenticated application-specific connectors when schemas and APIs are available.
+The MCP server reads normalized departmental facts and ACL-filtered connector snapshots. Native Zoho Books, CRM and Analytics adapters, Tally XML exports, reviewed SQL queries and MongoDB projections synchronize approved data into separate EAIL tables. Complete snapshots publish atomically; failed synchronization retains the prior generation within its configured freshness window. See CONNECTORS.md for connection setup and supported limits.
 
 Each MCP call launches one process in this release. A persistent session pool can reduce overhead after authorization/session-isolation tests are in place. This release exposes local stdio, not a public remote MCP transport.
 
