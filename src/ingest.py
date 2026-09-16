@@ -86,6 +86,8 @@ def ingest_file(name,principal=None):
 def reconcile():
     settings.documents.mkdir(parents=True,exist_ok=True)
     for item in sorted(settings.documents.iterdir()):
+        if item.name.lower().endswith(".meta.json"):
+            continue
         if item.suffix.lower() in EXTENSIONS: ingest_file(item.name)
     for old in db.rows('SELECT name FROM eail_documents WHERE active=1'):
         if not (settings.documents/old['name']).exists(): deactivate(old['name'],'deleted')
